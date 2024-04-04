@@ -5,6 +5,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ArmorMeta;
 
 public class HatCmd {
 
@@ -36,6 +37,22 @@ public class HatCmd {
 
                     heldItem = heldItem.clone();
                     helmet = helmet.clone();
+
+                    for (ItemStack armor : player.getInventory().getArmorContents()) {
+                        if (armor == null) continue;
+                        if (armor.isSimilar(helmet)) continue;
+
+                        switch (armor.getType()) {
+                            case DIAMOND_HELMET:
+                            case DIAMOND_CHESTPLATE:
+                            case DIAMOND_LEGGINGS:
+                            case DIAMOND_BOOTS:
+                                player.sendMessage(MiniMessage.miniMessage().deserialize(
+                                        "<yellow>You cannot equip more than 1 diamond piece."
+                                ));
+                                return;
+                        }
+                    }
 
                     player.setCooldown(heldItem.getType(), 20);
                     player.setCooldown(helmet.getType(), 20);
