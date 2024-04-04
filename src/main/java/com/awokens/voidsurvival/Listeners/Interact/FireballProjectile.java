@@ -41,7 +41,7 @@ public class FireballProjectile implements Listener {
 
         if (block == null) return;
 
-        new TNTTrailManager(plugin, block, 60);
+        new TNTTrailManager(plugin, block, 120);
     }
 
     @EventHandler
@@ -53,6 +53,8 @@ public class FireballProjectile implements Listener {
         ItemStack heldItem = event.getItem();
 
         if (heldItem == null) return;
+
+        if (heldItem.getType() != Material.FIRE_CHARGE) return;
 
         if (!heldItem.displayName().toString().contains("Fireball")) return; // not a throwable fireball
 
