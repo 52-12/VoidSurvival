@@ -1,5 +1,6 @@
 package com.awokens.voidsurvival;
 
+import com.awokens.voidsurvival.Commands.Admin.ForceResetWorld;
 import com.awokens.voidsurvival.Commands.Admin.InventorySpy;
 import com.awokens.voidsurvival.Commands.Default.*;
 import com.awokens.voidsurvival.Listeners.Interact.*;
@@ -51,7 +52,8 @@ public final class VoidSurvival extends JavaPlugin implements Listener {
         new DiscordCmd();
         new HatCmd();
         new InventorySpy(this);
-//        new ForceResetCmd();
+        new WikiCmd(this);
+        new ForceResetWorld(this);
     }
     @Override
     public void onEnable() {
@@ -94,6 +96,7 @@ public final class VoidSurvival extends JavaPlugin implements Listener {
                 }
             }
         }.runTaskTimer(this, 0L, 20L * 10L);
+
     }
     @Override
     public void onDisable() {
@@ -108,6 +111,7 @@ public final class VoidSurvival extends JavaPlugin implements Listener {
                 .cancel();
         Bukkit.getPotionBrewer()
                 .resetPotionMixes();
+        Bukkit.clearRecipes();
     }
     private void registerListeners() {
         List<Listener> listeners = List.of(
