@@ -54,7 +54,7 @@ public class LavaCauldronMechanism implements Listener {
 
         player.setCooldown(Material.COBBLED_DEEPSLATE, 20);
 
-        heldItem.subtract(16);
+        heldItem.subtract(32);
         player.swingMainHand();
         player.playSound(clickdBlock.getLocation(), Sound.ITEM_BUNDLE_INSERT, 1.0F, 1.0F);
         player.playSound(clickdBlock.getLocation(), Sound.BLOCK_GRINDSTONE_USE, 1.0F, 1.0F);
