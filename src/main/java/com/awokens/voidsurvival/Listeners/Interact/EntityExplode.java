@@ -23,7 +23,7 @@ public class EntityExplode implements Listener {
 
         for (Block connectedBlock : TNTTrailManager.getConnectedBlocks(tnt.getLocation().getBlock())) {
             if (TNTTrailManager.isRelative(connectedBlock)) {
-                new TNTTrailManager(plugin, connectedBlock, 60);
+                new TNTTrailManager(plugin, connectedBlock, 180);
                 break;
             }
         }
