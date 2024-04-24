@@ -99,7 +99,7 @@ public class SandMechanism implements Listener {
 
         Random random = new Random();
 
-        if (random.nextInt(100) <= 25) {
+        if (random.nextInt(100) <= 40) {
             block.setType(Material.SUSPICIOUS_SAND);
         } else {
             block.setType(Material.SAND);

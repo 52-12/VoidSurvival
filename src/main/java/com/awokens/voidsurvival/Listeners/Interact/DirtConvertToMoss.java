@@ -9,6 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Random;
+
 public class DirtConvertToMoss implements Listener {
 
     @EventHandler
@@ -29,17 +31,29 @@ public class DirtConvertToMoss implements Listener {
         switch (block.getType()) {
             case DIRT:
                 block.setType(Material.MOSS_BLOCK);
-                heldItem.subtract(1);
                 break;
             case ROOTED_DIRT:
                 block.setType(Material.GRASS_BLOCK);
-                heldItem.subtract(1);
                 break;
+            case DEAD_BUSH:
+                block.applyBoneMeal(BlockFace.UP);
+                int randomIndex = new Random().nextInt(treeSaplingTypes.length);
+                block.setType(treeSaplingTypes[randomIndex]);
+                return;
             default:
                 return;
         }
+        heldItem.subtract(1);
         block.applyBoneMeal(BlockFace.UP);
-
-
     }
+
+    public Material[] treeSaplingTypes = {
+            Material.OAK_SAPLING,
+            Material.BIRCH_SAPLING,
+            Material.DARK_OAK_SAPLING,
+            Material.JUNGLE_SAPLING,
+            Material.ACACIA_SAPLING,
+            Material.SPRUCE_SAPLING,
+            Material.BIRCH_SAPLING,
+    };
 }

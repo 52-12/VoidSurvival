@@ -30,6 +30,7 @@ public class GodVillager implements Listener {
 
     @EventHandler
     public void interact(PlayerInteractEntityEvent event) {
+
         if (!(event.getRightClicked() instanceof org.bukkit.entity.Villager villager)) return;
         switch (villager.getProfession()) {
             case ARMORER:
@@ -50,10 +51,6 @@ public class GodVillager implements Listener {
 
         if (!(event.getRightClicked() instanceof ZombieVillager villager)) return;
 
-        org.bukkit.entity.Villager.Profession profession = villager.getVillagerProfession();
-
-        if (profession != org.bukkit.entity.Villager.Profession.NITWIT) return;
-
         if (!villager.hasPotionEffect(PotionEffectType.WEAKNESS)) return;
 
         if (villager.isConverting()) return;
@@ -71,7 +68,7 @@ public class GodVillager implements Listener {
 
         Random rand = new Random();
 
-        int oxidizedCopper = rand.nextInt(32 - 20 + 1) + 20;
+        int oxidizedCopper = rand.nextInt(24 - 16 + 1) + 16;
         int phantomMembrane = rand.nextInt(16 - 8 + 1) + 8;
         int nautilusShell = rand.nextInt(16 - 8 + 1) + 8;
         int emeraldBlock = rand.nextInt(32 - 16 + 1) + 16;

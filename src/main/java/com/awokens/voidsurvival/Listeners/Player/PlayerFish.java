@@ -39,9 +39,9 @@ public class PlayerFish implements Listener {
 
         if (state != PlayerFishEvent.State.CAUGHT_FISH) return;
 
-//        player.playerListName(MiniMessage.miniMessage().deserialize(
-//                "<gradient:#1A75D3:#1C87F6:#1A75D3>\uD83C\uDFA3 " + player.getStatistic(Statistic.FISH_CAUGHT) + " <white>" + player.getName()
-//        ));
+        player.playerListName(MiniMessage.miniMessage().deserialize(
+                "<white>" + player.getName() + "<yellow> " + player.getStatistic(Statistic.FISH_CAUGHT)
+        ));
 
         Location head = player.getEyeLocation();
         Vector direction = head.getDirection();

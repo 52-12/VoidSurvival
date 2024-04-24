@@ -1,19 +1,25 @@
 package com.awokens.voidsurvival.Listeners.Player;
 
 import com.awokens.voidsurvival.Manager.SpawnPointManager;
+import com.awokens.voidsurvival.VoidSurvival;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockFertilizeEvent;
-import org.bukkit.event.block.BlockFormEvent;
-import org.bukkit.event.block.BlockPhysicsEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
 
 public class WorldGuard implements Listener {
+
+
+    private final VoidSurvival plugin;
+    public WorldGuard(VoidSurvival plugin) {
+        this.plugin = plugin;
+    }
+
 
     @EventHandler
     public void target(EntityTargetEvent event) {
@@ -37,9 +43,37 @@ public class WorldGuard implements Listener {
     }
 
     @EventHandler
+    public void liquidPlace(PlayerBucketEmptyEvent event) {
+        if (event.getPlayer().getGameMode() != GameMode.SURVIVAL) return;
+        if (inProtectedRegion(event.getBlock().getLocation())) event.setCancelled(true);
+
+        if (event.getBlock().getY() > 32) {
+            event.setCancelled(true);
+            Particle.DustOptions options = new Particle.DustOptions(Color.GRAY, 3);
+            event.getBlock().getWorld().spawnParticle(
+                    Particle.REDSTONE,
+                    event.getBlock().getLocation().toCenterLocation(),
+                    1,
+                    options
+            );
+        }
+    }
+
+    @EventHandler
     public void place(BlockPlaceEvent event) {
         if (event.getPlayer().getGameMode() != GameMode.SURVIVAL) return;
         if (inProtectedRegion(event.getBlock().getLocation())) event.setCancelled(true);
+
+        if (event.getBlock().getY() > 32) {
+            event.setCancelled(true);
+            Particle.DustOptions options = new Particle.DustOptions(Color.GRAY, 3);
+            event.getBlock().getWorld().spawnParticle(
+                    Particle.REDSTONE,
+                    event.getBlock().getLocation().toCenterLocation(),
+                    1,
+                    options
+            );
+        }
     }
 
     @EventHandler
@@ -57,7 +91,6 @@ public class WorldGuard implements Listener {
     @EventHandler
     public void form(BlockFormEvent event) {
         Location position = event.getBlock().getLocation();
-
 
         World world = event.getBlock().getWorld();
         WorldBorder border = world.getWorldBorder();
@@ -82,12 +115,6 @@ public class WorldGuard implements Listener {
     @EventHandler
     public void fertilize(BlockFertilizeEvent event) {
         if (inProtectedRegion(event.getBlock().getLocation())) event.setCancelled(true);
-    }
-
-    private enum WorldType {
-        WORLD,
-        NETHER,
-        END
     }
 
     private boolean inProtectedRegion(Location location) {

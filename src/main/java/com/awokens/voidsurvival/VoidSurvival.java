@@ -3,6 +3,7 @@ package com.awokens.voidsurvival;
 import com.awokens.voidsurvival.Commands.Admin.ForceResetWorld;
 import com.awokens.voidsurvival.Commands.Admin.InventorySpy;
 import com.awokens.voidsurvival.Commands.Default.*;
+import com.awokens.voidsurvival.Commands.Default.Help.*;
 import com.awokens.voidsurvival.Listeners.Interact.*;
 import com.awokens.voidsurvival.Listeners.Entities.*;
 import com.awokens.voidsurvival.Listeners.Player.*;
@@ -10,11 +11,16 @@ import com.awokens.voidsurvival.Manager.LuckPermsManager;
 import com.awokens.voidsurvival.Manager.CustomRecipesManager;
 import com.awokens.voidsurvival.Manager.WorldResetManager;
 import com.awokens.voidsurvival.Manager.ConfigManager;
+import com.awokens.voidsurvival.Powerskulls.PiglinSkull;
+import com.awokens.voidsurvival.Powerskulls.SkeletonSkull;
+import com.awokens.voidsurvival.Powerskulls.ZombieSkull;
 import com.samjakob.spigui.SpiGUI;
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPIBukkitConfig;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
@@ -97,6 +103,11 @@ public final class VoidSurvival extends JavaPlugin implements Listener {
             }
         }.runTaskTimer(this, 0L, 20L * 10L);
 
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.playerListName(MiniMessage.miniMessage().deserialize(
+                    "<white>" + player.getName() + "<yellow> " + player.getStatistic(Statistic.FISH_CAUGHT)
+            ));
+        }
     }
     @Override
     public void onDisable() {
@@ -119,7 +130,7 @@ public final class VoidSurvival extends JavaPlugin implements Listener {
                 new PlayerFish(),
                 new PlayerDeath(),
                 new PlayerPortalEnter(),
-                new WorldGuard(),
+                new WorldGuard(this),
                 new Skeleton(),
                 new Guardian(),
                 new WanderingTrader(),
@@ -134,7 +145,9 @@ public final class VoidSurvival extends JavaPlugin implements Listener {
                 new CustomSuspiciousSandDrops(),
                 new LightningRod(),
                 new PlayerArmorEquip(),
-                new Piglin(),
+
+                new Piglin(this),
+                new PlayerSaddleRidePlayer(this),
                 new LavaCauldronMechanism(this),
                 new EnderEyePlace(this),
                 new HandTradeSwap(this),
@@ -142,7 +155,13 @@ public final class VoidSurvival extends JavaPlugin implements Listener {
                 new PlayerQuit(this),
                 new PlayerJoin(this),
                 new PlayerChat(this),
-                new FireballProjectile(this)
+                new FireballProjectile(this),
+
+                new PlayerBreakBlock(),
+                new DripstoneLavaForm(),
+                new PiglinSkull(),
+                new SkeletonSkull(),
+                new ZombieSkull()
         );
         for (Listener listener : listeners) {
             try {

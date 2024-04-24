@@ -2,6 +2,7 @@ package com.awokens.voidsurvival.Listeners.Interact;
 
 import com.awokens.voidsurvival.Manager.TNTTrailManager;
 import com.awokens.voidsurvival.VoidSurvival;
+import de.tr7zw.changeme.nbtapi.NBTEntity;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -35,13 +36,20 @@ public class FireballProjectile implements Listener {
 
         ProjectileSource source = projectile.getShooter();
 
-        if (!(source instanceof Player)) return; // wasn't shot by a player check #3
+        if (!(source instanceof Player player)) return; // wasn't shot by a player check #3
 
         Block block = event.getHitBlock();
 
         if (block == null) return;
 
-        new TNTTrailManager(plugin, block, 120);
+        ItemStack helmet = player.getInventory().getHelmet();
+
+        int multiplier = 1;
+        if (helmet != null && helmet.getType() == Material.CREEPER_HEAD) {
+            multiplier = 2;
+        }
+
+        new TNTTrailManager(plugin, block, 120 * multiplier);
     }
 
     @EventHandler

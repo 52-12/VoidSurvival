@@ -1,4 +1,4 @@
-package com.awokens.voidsurvival.Commands.Default;
+package com.awokens.voidsurvival.Commands.Default.Help;
 
 import dev.jorel.commandapi.CommandAPI;
 import dev.jorel.commandapi.CommandAPICommand;
@@ -7,7 +7,6 @@ import dev.jorel.commandapi.RegisteredCommand;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.permissions.Permission;
 
 import java.util.HashMap;
 

@@ -19,9 +19,10 @@ import org.bukkit.inventory.meta.BundleMeta;
 
 public class PlayerChat implements Listener {
 
-    private final String pattern = "\\[(item|inv)]";
+    private final String pattern = "\\[(item|inv|ec)]";
     private final String itemPattern = "\\[item]";
     private final String invPattern = "\\[inv]";
+    private final String ecPattern = "\\[ec]";
 
     private final VoidSurvival plugin;
     public PlayerChat(VoidSurvival plugin) {
@@ -37,13 +38,17 @@ public class PlayerChat implements Listener {
 
         String message = event.signedMessage().message().trim();
 
-
         if (message.matches(itemPattern)) {
             item(event.getPlayer());
             return;
         }
         if (message.matches(invPattern)) {
             inv(event.getPlayer());
+            return;
+        }
+
+        if (message.matches(ecPattern)) {
+            ec(event.getPlayer());
             return;
         }
 
@@ -109,6 +114,42 @@ public class PlayerChat implements Listener {
 
             final Component component = MiniMessage.miniMessage().deserialize(
                             "<gray>"+ player.getName() + ": " + "<gray>[" + "<yellow>Inventory Snapshot<gray>]")
+                    .hoverEvent(hover)
+                    .clickEvent(ClickEvent.callback((callback) -> {
+                        individual.openInventory(snapshot.getInventory());
+                    }));
+            individual.sendMessage(component);
+        }
+    }
+
+    public void ec(Player player) {
+
+        ItemStack[] items = player.getEnderChest().getContents();
+
+        ItemStack bundle = new ItemStack(Material.BUNDLE);
+
+        BundleMeta meta = (BundleMeta) bundle.getItemMeta();
+
+
+        SGMenu snapshot = plugin.spiGUI().create("&8Enderchest Snapshot", 3);
+        for (ItemStack item : items) {
+            if (item == null || item.isEmpty()) continue;
+            meta.addItem(item);
+            snapshot.addButton(new SGButton(item));
+        }
+
+        meta.displayName(MiniMessage.miniMessage().deserialize(
+                "<yellow>" + player.getName() + "'s Enderchest Snapshot"
+        ).decoration(TextDecoration.ITALIC, false));
+
+        bundle.setItemMeta(meta);
+
+        for (Player individual : Bukkit.getOnlinePlayers()) {
+            HoverEvent<HoverEvent.ShowItem> hover = Bukkit.getItemFactory().asHoverEvent(bundle,
+                    showItem -> showItem);
+
+            final Component component = MiniMessage.miniMessage().deserialize(
+                            "<gray>"+ player.getName() + ": " + "<gray>[" + "<yellow>Enderchest Snapshot<gray>]")
                     .hoverEvent(hover)
                     .clickEvent(ClickEvent.callback((callback) -> {
                         individual.openInventory(snapshot.getInventory());

@@ -48,11 +48,11 @@ public class LavaCauldronMechanism implements Listener {
 
         if (heldItem.getType() != Material.COBBLED_DEEPSLATE) return;
 
-        if (heldItem.getAmount() < 16) return;
+        if (heldItem.getAmount() < 32) return;
 
         if (player.getCooldown(Material.COBBLED_DEEPSLATE) > 0) return;
 
-        player.setCooldown(Material.COBBLED_DEEPSLATE, 20);
+        player.setCooldown(Material.COBBLED_DEEPSLATE, 20 * 181);
 
         heldItem.subtract(32);
         player.swingMainHand();

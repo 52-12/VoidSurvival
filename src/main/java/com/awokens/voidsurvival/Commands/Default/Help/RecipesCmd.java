@@ -1,4 +1,4 @@
-package com.awokens.voidsurvival.Commands.Default;
+package com.awokens.voidsurvival.Commands.Default.Help;
 
 import com.awokens.voidsurvival.VoidSurvival;
 import dev.jorel.commandapi.CommandAPICommand;

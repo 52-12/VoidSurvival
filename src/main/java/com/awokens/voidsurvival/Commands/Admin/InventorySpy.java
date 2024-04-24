@@ -7,8 +7,6 @@ import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.stream.Collectors;
 
 public class InventorySpy {

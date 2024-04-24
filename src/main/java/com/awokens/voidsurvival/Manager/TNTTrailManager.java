@@ -23,7 +23,7 @@ public class TNTTrailManager {
     private final Plugin plugin;
 
 
-    private final float max_counter = 100.0F;
+    private final float max_counter = 600.0F;
 
     public TNTTrailManager(Plugin plugin, Block startBlock, int counter) {
         this.relatives = new HashSet<>();
