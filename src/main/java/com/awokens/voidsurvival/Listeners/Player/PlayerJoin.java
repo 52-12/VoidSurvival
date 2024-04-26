@@ -120,8 +120,7 @@ public class PlayerJoin implements Listener {
 
                 player.sendMessage(MiniMessage.miniMessage().deserialize(
                         "<newline><b>VOID SURVIVAL</b><newline><newline>"
-                        + "→ To view all commands <green>/commands</green><newline>"
-                        + "→ To toggle specifics <green>/toggle <type></green><newline><newline>"
+                        + "→ New to the server? </green>/wiki<newline>"
                         + "Haven't join our Discord yet?<newline>"
                         + "→ <color:#308aff><click:open_url:'https://discord.gg/q3BRbWqHgx'>Click this message to join today</click></color><newline>"
                 ));

@@ -20,7 +20,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class PlayerDeath implements Listener {
-
     @EventHandler
     public void death(PlayerDeathEvent event) {
         event.deathMessage();
@@ -36,7 +35,7 @@ public class PlayerDeath implements Listener {
             case VOID -> "falling into the abyss";
             case BLOCK_EXPLOSION -> "an explosion";
             case KILL, CONTACT, ENTITY_ATTACK, ENTITY_SWEEP_ATTACK, ENTITY_EXPLOSION, PROJECTILE -> {
-                Entity attacker = cause.getDamageSource().getCausingEntity();
+                Entity attacker = cause.getDamageSource().getCausingEntity(); // ignore
 
                 if (attacker == null) {
                     yield "an unknown entity";
@@ -57,6 +56,7 @@ public class PlayerDeath implements Listener {
             default -> "unknown causes";
         };
 
+        reason = reason.toLowerCase().replaceAll("_", " ").trim();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendActionBar(MiniMessage.miniMessage().deserialize(

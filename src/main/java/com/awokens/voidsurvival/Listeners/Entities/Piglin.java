@@ -31,13 +31,13 @@ public class Piglin implements Listener {
 
     @EventHandler
     public void barter(PiglinBarterEvent event) {
+
         Iterator<ItemStack> outcome = event.getOutcome().iterator();
+
         while (outcome.hasNext()) {
             ItemStack item = outcome.next();
             switch (item.getType()) {
-                case OBSIDIAN:
-                case CRYING_OBSIDIAN:
-                    outcome.remove();
+                case OBSIDIAN, CRYING_OBSIDIAN -> outcome.remove();
             }
         }
     }
