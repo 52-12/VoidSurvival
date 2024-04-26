@@ -9,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class PlayerBreakBlock implements Listener {
